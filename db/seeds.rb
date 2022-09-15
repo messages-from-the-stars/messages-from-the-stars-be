@@ -5,3 +5,38 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'factory_bot_rails'
+include FactoryBot::Syntax::Methods
+
+@user_authors = []
+@user_readers = []
+@satellites = []
+@messages = []
+@user_messages = []
+@user_satellites = []
+
+20.times do
+  @user_authors << FactoryBot.create(:user)
+end
+
+20.times do
+  @user_readers << FactoryBot.create(:user)
+end
+
+30.times do
+  @satellites << FactoryBot.create(:satellite)
+end
+
+50.times do
+  @messages << FactoryBot.create(:message, satellite_id: @satellites.sample.id)
+end
+
+@messages.each do |message|
+  @user_messages << FactoryBot.create(:user_message, user_id: @user_authors.sample.id, message_id: message.id, user_role: 0)
+  @user_messages << FactoryBot.create(:user_message, user_id: @user_readers.sample.id, message_id: message.id, user_role: 1)
+end
+
+@satellites.each do |satellite|
+  @user_satellites << FactoryBot.create(:user_satellite, user_id: [@user_authors.sample.id,@user_readers.sample.id].sample, satellite_id: @satellites.sample.id)
+end

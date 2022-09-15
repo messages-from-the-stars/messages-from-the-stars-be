@@ -9,4 +9,8 @@ class Message < ApplicationRecord
   has_many :users, through: :user_messages
 
   belongs_to :satellite
+
+  def self.find_by_sat_id(sat_id)
+    where("satellite_id = ?", sat_id).order(created_at: :desc)
+  end
 end

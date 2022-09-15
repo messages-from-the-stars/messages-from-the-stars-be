@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "/messages/find_by_sat_id", to: "messages#find_by_sat_id"
 
+      post "/user_satellite/create_user_satellite", to: "user_satellites#create"
+
       resources :satellites, only: [:show]
     end
   end

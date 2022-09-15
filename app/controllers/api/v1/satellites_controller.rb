@@ -5,6 +5,18 @@ class Api::V1::SatellitesController < ApplicationController
     satellite_json_response(@satellite)
   end
 
+  def find_by_user_id
+    user_sat_ids = UserSatellite.where(user_id: params[:user_id])
+    
+    sat_ids = user_sat_ids.map do |ids|
+      ids[:satellite_id]
+    end.uniq
+
+    satellites = Satellite.find(sat_ids)
+
+    satellite_json_response(satellites)
+  end
+
   private
 
   def set_satellite

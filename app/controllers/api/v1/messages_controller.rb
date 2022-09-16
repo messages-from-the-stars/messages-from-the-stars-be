@@ -6,7 +6,7 @@ class Api::V1::MessagesController < ApplicationController
     if message.save
       message_json_response(message)
     else
-      render status: 200
+      render status: 400
     end
   end
   

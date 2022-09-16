@@ -77,4 +77,20 @@ describe 'Messages API' do
     expect(created_message.content).to eq("Hello i am a satellite.")
   end
 
+  it 'returns an error if message is not created' do
+    sat_1 = FactoryBot.create(:satellite)
+
+    message_params = ({
+      satellite_id: sat_1.id,
+      start_lat: 77.654,
+      content: "Hello i am a satellite."
+    })
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/messages/", headers: headers, params: JSON.generate(message: message_params)
+
+    expect(response).to_not be_successful
+  end
+
 end

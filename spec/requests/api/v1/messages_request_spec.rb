@@ -51,7 +51,46 @@ describe 'Messages API' do
       expect(message[:attributes]).to have_key(:updated_at)
       expect(message[:attributes][:updated_at]).to be_a(String)
     end
+  end
 
+  it 'can create a new message' do
+    sat_1 = FactoryBot.create(:satellite)
+
+    message_params = ({
+      satellite_id: sat_1.id,
+      start_lat: 77.654,
+      start_lng: 12.123,
+      content: "Hello i am a satellite."
+    })
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/messages/", headers: headers, params: JSON.generate(message: message_params)
+
+    created_message = Message.last
+
+    expect(response).to be_successful
+
+    expect(created_message.satellite_id).to eq(sat_1.id)
+    expect(created_message.start_lat).to eq(77.654)
+    expect(created_message.start_lng).to eq(12.123)
+    expect(created_message.content).to eq("Hello i am a satellite.")
+  end
+
+  it 'returns an error if message is not created' do
+    sat_1 = FactoryBot.create(:satellite)
+
+    message_params = ({
+      satellite_id: sat_1.id,
+      start_lat: 77.654,
+      content: "Hello i am a satellite."
+    })
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/messages/", headers: headers, params: JSON.generate(message: message_params)
+
+    expect(response).to_not be_successful
   end
 
 end

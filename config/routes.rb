@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
       resources :satellites, only: [:show]
 
-      resources :messages, only: [:create]
+      resources :messages, only: [:create, :show]
     end
   end
 end

@@ -8,4 +8,8 @@ module Response
     render json: MessageSerializer.new(object), status: status
   end
 
+  def user_json_response(object, status = :ok)
+    render json: UserSerializer.new(object), status: status
+  end
+
 end

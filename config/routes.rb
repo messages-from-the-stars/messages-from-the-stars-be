@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
       post "/user_satellite/create_user_satellite", to: "user_satellites#create"
 
+      get "/users/find_or_create_user", to: "users#find_or_create_user"
 
       resources :satellites, only: [:show]
 

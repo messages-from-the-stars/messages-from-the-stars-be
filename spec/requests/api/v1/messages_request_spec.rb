@@ -2,6 +2,39 @@ require 'rails_helper'
 
 describe 'Messages API' do
 
+  it 'can return one message by ID' do
+    sat_1 = FactoryBot.create(:satellite)
+      sat_1_mes_1 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("19th May, 2000"))
+      sat_1_mes_2 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("30th December, 2021"))
+      sat_1_mes_3 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("20th March, 1920"))
+
+    get "/api/v1/messages/#{sat_1_mes_2.id}"
+
+    expect(response).to be_successful
+
+    message = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(message).to have_key(:id)
+    expect(message[:id].to_i).to eq(sat_1_mes_2.id)
+
+    expect(message).to have_key(:type)
+    expect(message[:type]).to eq("message")
+
+    expect(message).to have_key(:attributes)
+
+    expect(message[:attributes]).to have_key(:satellite_id)
+    expect(message[:attributes][:satellite_id]).to eq(sat_1_mes_2.satellite_id)
+
+    expect(message[:attributes]).to have_key(:start_lat)
+    expect(message[:attributes][:start_lat]).to eq(sat_1_mes_2.start_lat)
+
+    expect(message[:attributes]).to have_key(:start_lng)
+    expect(message[:attributes][:start_lng]).to eq(sat_1_mes_2.start_lng)
+
+    expect(message[:attributes]).to have_key(:content)
+    expect(message[:attributes][:content]).to eq(sat_1_mes_2.content)
+  end
+
   it 'can return all messages associated with a given satellite ID' do
 
     sat_1 = FactoryBot.create(:satellite)

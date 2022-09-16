@@ -1,4 +1,9 @@
 class Api::V1::MessagesController < ApplicationController
+  before_action :set_message, only: [:show]
+
+  def show
+    message_json_response(@message)
+  end
 
   def create
     message = Message.new(message_params)
@@ -20,6 +25,10 @@ class Api::V1::MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:satellite_id, :start_lat, :start_lng, :content)
+  end
+
+  def set_message
+    @message = Message.find(params[:id])
   end
 
 end

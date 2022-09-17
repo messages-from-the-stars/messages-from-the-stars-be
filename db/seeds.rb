@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'csv'
 require 'factory_bot_rails'
 include FactoryBot::Syntax::Methods
 
@@ -24,8 +25,8 @@ end
   @user_readers << FactoryBot.create(:user)
 end
 
-30.times do
-  @satellites << FactoryBot.create(:satellite)
+CSV.foreach(Rails.root.join('lib/brightest_sat_ids.csv'), headers: true) do |row|
+  @satellites << Satellite.create(norad_id: row[0])
 end
 
 50.times do

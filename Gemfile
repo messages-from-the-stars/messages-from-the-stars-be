@@ -29,6 +29,12 @@ gem 'faraday'
 
 gem 'jsonapi-serializer'
 
+gem 'factory_bot_rails'
+
+gem 'faker'
+
+gem 'csv'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
@@ -38,8 +44,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'pry'
   gem 'figaro'
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'webmock'
   gem 'vcr'

@@ -133,7 +133,7 @@ describe 'Messages API' do
     sat_1_mes_3 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("20th March, 1920"))
 
     get "/api/v1/messages/find_by_norad_id?norad_id=#{sat_1.norad_id}"
-
+    
     expect(response).to be_successful
     
     data = JSON.parse(response.body, symbolize_names: true)
@@ -143,5 +143,16 @@ describe 'Messages API' do
     expect(data[1]).to eq(3)
   end
 
+   it 'can return a sat_id and message count' do
+    get "/api/v1/messages/find_by_norad_id?norad_id=1234"
+    
+    expect(response).to be_successful
+    
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(data).to be_a(Array)
+    expect(data[0]).to eq(0)
+    expect(data[1]).to eq(0)
+  end
 
 end

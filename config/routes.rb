@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
       get "/users/find_or_create_user", to: "users#find_or_create_user"
 
-      resources :satellites, only: [:show]
+      resources :satellites, only: [:show, :create]
 
       resources :messages, only: [:create, :show]
     end

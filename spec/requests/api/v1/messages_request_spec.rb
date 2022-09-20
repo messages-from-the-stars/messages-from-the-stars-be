@@ -126,4 +126,22 @@ describe 'Messages API' do
     expect(response).to_not be_successful
   end
 
+  it 'can return a sat_id and message count' do
+    sat_1 = FactoryBot.create(:satellite)
+    sat_1_mes_1 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("19th May, 2000"))
+    sat_1_mes_2 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("30th December, 2021"))
+    sat_1_mes_3 = FactoryBot.create(:message, satellite_id: sat_1.id, created_at: DateTime.parse("20th March, 1920"))
+
+    get "/api/v1/messages/find_by_norad_id?norad_id=#{sat_1.norad_id}"
+
+    expect(response).to be_successful
+    
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(data).to be_a(Array)
+    expect(data[0]).to eq(sat_1.norad_id.to_s)
+    expect(data[1]).to eq(3)
+  end
+
+
 end

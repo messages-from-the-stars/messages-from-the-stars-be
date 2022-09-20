@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get "/satellites/find_by_user_id", to: "satellites#find_by_user_id"
       get "/messages/find_by_sat_id", to: "messages#find_by_sat_id"
+      get "/messages/find_by_norad_id", to: "messages#find_by_norad_id"
 
       post "/user_satellite/create_user_satellite", to: "user_satellites#create"
 

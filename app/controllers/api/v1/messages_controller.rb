@@ -21,6 +21,14 @@ class Api::V1::MessagesController < ApplicationController
     message_json_response(@messages)
   end
 
+  def find_by_norad_id
+    satellite = Satellite.find_by(norad_id: params[:norad_id])
+    
+    info = [params[:norad_id], Message.find_by_sat_id(satellite.id).count]
+
+    render json: info, status: 201
+  end
+
   private
 
   def message_params

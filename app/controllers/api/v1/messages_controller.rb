@@ -23,8 +23,12 @@ class Api::V1::MessagesController < ApplicationController
 
   def find_by_norad_id
     satellite = Satellite.find_by(norad_id: params[:norad_id])
-    
-    info = [params[:norad_id], Message.find_by_sat_id(satellite.id).count]
+     
+    if satellite != nil 
+      info = [params[:norad_id], Message.find_by_sat_id(satellite.id).count]
+    else 
+      info = [0,0]
+    end 
 
     render json: info, status: 201
   end

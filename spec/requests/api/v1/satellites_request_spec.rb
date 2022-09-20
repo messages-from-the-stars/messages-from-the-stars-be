@@ -1,6 +1,26 @@
 require 'rails_helper'
 
 describe 'Satellites API' do
+  it 'can create a new satellite by norad id' do
+    norad_id = 12345
+
+    expect(Satellite.all.count).to eq(0)
+
+    post "/api/v1/satellites?sat_id=#{norad_id}"
+
+    expect(Satellite.all.count).to eq(1)
+  end
+
+  it 'does not create a new satellite if it already exists in DB' do
+    sat_1 = FactoryBot.create(:satellite, norad_id: 12345)
+
+    expect(Satellite.all.count).to eq(1)
+
+    post "/api/v1/satellites?sat_id=12345"
+
+    expect(Satellite.all.count).to eq(1)
+  end
+
   it 'can return one satellite by id' do
     sat_1 = FactoryBot.create(:satellite)
     sat_2 = FactoryBot.create(:satellite)

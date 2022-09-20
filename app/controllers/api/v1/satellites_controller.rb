@@ -6,9 +6,9 @@ class Api::V1::SatellitesController < ApplicationController
   end
 
   def create
-    @satellite = Satellite.find_or_create_by(norad_id: params[:sat_id])
+    satellite = Satellite.find_or_create_by(norad_id: params[:sat_id])
 
-    satellite_json_response(@satellite)
+    render json: satellite.id, status: 201
   end
 
   def find_by_user_id

@@ -25,7 +25,7 @@ This is the backend repository for [Messages From the Stars](http://messages-fro
 
 ## Database Design And Schema
 
-(insert DB diagram screenshot on GitHub)
+<img width="1007" alt="image" src="https://user-images.githubusercontent.com/17027357/191807806-b9571942-9a1d-4889-a88b-f18194ba5b2e.png">
 
 ## API Endpoints
 
